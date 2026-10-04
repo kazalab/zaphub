@@ -1,0 +1,14 @@
+{
+  "features": {
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+      "version": "1.10.1",
+      "resolved": "ghcr.io/devcontainers/features/docker-outside-of-docker@sha256:698f5900fac471e046c6e9d4333fec88c0e8d952c713494fa0712dce80baeca0",
+      "integrity": "sha256:698f5900fac471e046c6e9d4333fec88c0e8d952c713494fa0712dce80baeca0"
+    },
+    "ghcr.io/jsburckhardt/devcontainer-features/mise:1": {
+      "version": "1.0.0",
+      "resolved": "ghcr.io/jsburckhardt/devcontainer-features/mise@sha256:cba9d132ead21358de04d24bd3fee7947a732c9ac2bcfb366e9a731d7083fcc1",
+      "integrity": "sha256:cba9d132ead21358de04d24bd3fee7947a732c9ac2bcfb366e9a731d7083fcc1"
+    }
+  }
+}

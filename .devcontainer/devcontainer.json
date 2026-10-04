@@ -1,0 +1,28 @@
+{
+  "name": "ZapHub",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu26.04",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+      "dockerDashComposeVersion": "none"
+    },
+    "ghcr.io/jsburckhardt/devcontainer-features/mise:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "github.vscode-github-actions",
+        "golang.go"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "files.insertFinalNewline": true,
+        "files.trimTrailingWhitespace": true
+      }
+    }
+  },
+  "containerEnv": {
+    "DAGGER_NO_NAG": "1"
+  },
+  "postCreateCommand": "echo 'eval \"$(mise activate bash)\"' >> ~/.bashrc && mise run bootstrap",
+  "workspaceMount": "type=bind,source=${localWorkspaceFolder},target=${containerWorkspaceFolder}"
+}
