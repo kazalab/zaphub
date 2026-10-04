@@ -1,0 +1,41 @@
+version: 2
+
+project_name: zaphub
+
+changelog:
+  disable: true
+
+builds:
+  - main: ./cmd/zaphub
+    env:
+      - CGO_ENABLED=0
+    ldflags:
+      - -s
+      - -w
+      - -X github.com/kazalab/zaphub/internal/cli.appVersion={{.Version}}
+      - -X github.com/kazalab/zaphub/internal/cli.appCommit={{.Commit}}
+      - -X github.com/kazalab/zaphub/internal/cli.appBuildDate={{.Date}}
+    goos:
+      - linux
+    goarch:
+      - amd64
+
+kos:
+  - base_image: ghcr.io/juli3nk/static:20260901
+    labels:
+      org.opencontainers.image.title: "{{ .ProjectName }}"
+      org.opencontainers.image.source: "{{ .GitURL }}"
+      org.opencontainers.image.description: "API JSON en Go pour le guide TV TNT française, les sorties cinéma de la semaine et les flux YouTube, avec une interface web embarquée."
+      org.opencontainers.image.licenses: MIT
+      org.opencontainers.image.version: "{{ .Version }}"
+      org.opencontainers.image.revision: "{{ .FullCommit }}"
+      org.opencontainers.image.created: "{{ .Date }}"
+    repositories:
+      - ghcr.io/kazalab/zaphub
+    bare: true
+    tags:
+      - latest
+      - "{{ .Tag }}"
+
+release:
+  skip_upload: true
