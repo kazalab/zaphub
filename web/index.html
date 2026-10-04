@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZapHub</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <span class="brand-logo">▶</span>
+        <span class="brand-name">ZapHub</span>
+      </div>
+      <a class="status-link" href="status.html" title="Statut du service">
+        <div class="status-pill" id="statusPill">
+          <span class="status-dot" id="statusDot"></span>
+          <span id="statusText">…</span>
+        </div>
+      </a>
+    </div>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button class="tab active" data-tab="tv" role="tab" aria-selected="true">📺 TV Guide</button>
+    <button class="tab" data-tab="youtube" role="tab" aria-selected="false">▶ YouTube</button>
+    <button class="tab" data-tab="cinema" role="tab" aria-selected="false">🎬 Cinéma</button>
+  </nav>
+
+  <main class="container">
+    <section id="tab-tv" class="tab-panel active" role="tabpanel">
+      <div class="toolbar">
+        <h2>Programme TV</h2>
+        <div class="toolbar-controls">
+          <input type="text" id="tvFilter" placeholder="Filtrer par chaîne…" autocomplete="off">
+          <button class="btn-ghost" id="tvRefresh" title="Actualiser">⟳</button>
+        </div>
+      </div>
+
+      <div class="segmented" role="tablist">
+        <button class="seg-btn active" data-tvview="now" role="tab" aria-selected="true">À l'antenne</button>
+        <button class="seg-btn" data-tvview="evening" role="tab" aria-selected="false">Ce soir</button>
+      </div>
+
+      <div class="card" id="tvNowCard">
+        <h3 class="card-title">À l'antenne</h3>
+        <p class="card-subtitle">Ce qui passe en ce moment sur chaque chaîne</p>
+        <div id="tvNow" class="now-list"></div>
+      </div>
+
+      <div class="card" id="tvEveningCard" hidden>
+        <h3 class="card-title">Ce soir</h3>
+        <p class="card-subtitle">Les programmes de la soirée</p>
+        <div id="tvEvening" class="evening-grid"></div>
+      </div>
+    </section>
+
+    <section id="tab-cinema" class="tab-panel" role="tabpanel">
+      <div class="toolbar">
+        <h2>Sorties de la semaine</h2>
+        <div class="toolbar-controls">
+          <button class="btn-ghost" id="cinemaRefresh" title="Actualiser">⟳</button>
+        </div>
+      </div>
+      <div id="cinema" class="cinema-grid"></div>
+    </section>
+
+    <section id="tab-youtube" class="tab-panel" role="tabpanel">
+      <div class="card">
+        <h3 class="card-title">Ajouter une chaîne</h3>
+        <p class="card-subtitle">Collez un ID de chaîne YouTube (ex. <code>UCXuqSBlHAE6Xw-yeJA0Tunw</code>)</p>
+        <form id="addChannelForm" class="add-form">
+          <input type="text" id="channelIdInput" placeholder="UC…" required autocomplete="off">
+          <button type="submit" class="btn-primary">Ajouter</button>
+        </form>
+        <p id="addFeedback" class="feedback" hidden></p>
+      </div>
+
+      <div class="card">
+        <h3 class="card-title">Chaînes suivies</h3>
+        <div id="ytChannels" class="channel-list"></div>
+      </div>
+
+      <div class="card">
+        <h3 class="card-title">Dernières vidéos</h3>
+        <div id="ytVideos" class="video-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

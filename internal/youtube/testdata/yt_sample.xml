@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" xmlns:yt="http://www.youtube.com/xml/schemas/2015">
+  <id>yt:channel:UCabc</id>
+  <title>Chaîne Test</title>
+  <author>
+    <name>Chaîne Test</name>
+  </author>
+  <entry>
+    <id>yt:video:VID1</id>
+    <title>Première vidéo</title>
+    <link rel="alternate" href="https://www.youtube.com/watch?v=VID1"/>
+    <published>2026-08-11T18:08:30+00:00</published>
+    <updated>2026-08-11T18:53:23+00:00</updated>
+    <media:group>
+      <media:title>Première vidéo</media:title>
+      <media:description>Description test</media:description>
+      <media:thumbnail url="https://i.ytimg.com/vi/VID1/hqdefault.jpg"/>
+      <media:duration>320</media:duration>
+      <media:community>
+        <media:starRating count="5100" average="5.00" min="1" max="5"/>
+      </media:community>
+    </media:group>
+  </entry>
+  <entry>
+    <id>yt:video:VID2</id>
+    <title>Deuxième vidéo</title>
+    <link rel="alternate" href="https://www.youtube.com/watch?v=VID2"/>
+    <published>2026-08-10T09:00:00+00:00</published>
+    <updated>2026-08-10T09:10:00+00:00</updated>
+    <media:group>
+      <media:title>Deuxième vidéo</media:title>
+      <media:description>Autre description</media:description>
+      <media:thumbnail url="https://i.ytimg.com/vi/VID2/hqdefault.jpg"/>
+      <media:duration>125</media:duration>
+      <media:community>
+        <media:starRating count="120" average="4.80" min="1" max="5"/>
+      </media:community>
+    </media:group>
+  </entry>
+</feed>

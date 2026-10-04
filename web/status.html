@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Statut · ZapHub</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page-status>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand-link" href="/" title="Accueil">
+        <div class="brand">
+          <span class="brand-logo">▶</span>
+          <span class="brand-name">ZapHub</span>
+        </div>
+      </a>
+      <a class="status-link" href="index.html" title="Retour à l'accueil">
+        <div class="status-pill" id="statusPill">
+          <span class="status-dot" id="statusDot"></span>
+          <span id="statusText">…</span>
+        </div>
+      </a>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="toolbar">
+      <h2>État du service</h2>
+    </div>
+    <div class="card">
+      <div id="healthStatus" class="health-list"></div>
+    </div>
+  </main>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
