@@ -1,0 +1,46 @@
+{
+  "name": "zaphub",
+  "engineVersion": "v0.21.9",
+  "toolchains": [
+    {
+      "name": "commitlint",
+      "source": "github.com/juli3nk/daggerverse/commitlint@main",
+      "pin": "82b0335e8c7999eedbc09783c3ab5dd4e0cd1e14"
+    },
+    {
+      "name": "gitleaks",
+      "source": "github.com/juli3nk/daggerverse/gitleaks@main",
+      "pin": "82b0335e8c7999eedbc09783c3ab5dd4e0cd1e14"
+    },
+    {
+      "name": "gitlocal",
+      "source": "github.com/juli3nk/daggerverse/gitlocal@main",
+      "pin": "82b0335e8c7999eedbc09783c3ab5dd4e0cd1e14"
+    },
+    {
+      "name": "go",
+      "source": "github.com/juli3nk/daggerverse/go@main",
+      "pin": "82b0335e8c7999eedbc09783c3ab5dd4e0cd1e14"
+    },
+    {
+      "name": "goreleaser",
+      "source": "github.com/juli3nk/daggerverse/goreleaser@main",
+      "pin": "82b0335e8c7999eedbc09783c3ab5dd4e0cd1e14"
+    },
+    {
+      "name": "jsonfile",
+      "source": "github.com/juli3nk/daggerverse/jsonfile@main",
+      "pin": "82b0335e8c7999eedbc09783c3ab5dd4e0cd1e14"
+    },
+    {
+      "name": "markdown",
+      "source": "github.com/juli3nk/daggerverse/markdown@main",
+      "pin": "82b0335e8c7999eedbc09783c3ab5dd4e0cd1e14"
+    },
+    {
+      "name": "semantic-release",
+      "source": "github.com/juli3nk/daggerverse/semantic-release@main",
+      "pin": "82b0335e8c7999eedbc09783c3ab5dd4e0cd1e14"
+    }
+  ]
+}
