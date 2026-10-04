@@ -1,0 +1,31 @@
+# Text files
+* text=auto eol=lf
+
+# Markdown
+*.md text eol=lf
+
+# YAML
+*.yml text eol=lf
+*.yaml text eol=lf
+
+# JSON
+*.json text eol=lf
+
+# Shell
+*.sh text eol=lf
+
+# Binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+
+# Archives
+*.zip binary
+*.tar binary
+*.gz binary
+
+# Go
+*.go text eol=lf

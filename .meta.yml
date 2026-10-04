@@ -1,0 +1,18 @@
+name: zaphub
+description: >
+  API JSON en Go pour le guide TV TNT française,
+  les sorties cinéma de la semaine et les flux YouTube,
+  avec une interface web embarquée.
+homepage: ""
+topics:
+  - go
+  - api
+  - json
+  - epg
+  - tv-guide
+  - tnt
+  - cinema
+  - youtube
+  - rss
+  - web-ui
+license: MIT
