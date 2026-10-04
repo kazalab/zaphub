@@ -1,0 +1,155 @@
+[tools]
+dagger = "0.21.9"
+go = "1.26.7"
+yq = "latest"
+
+[env]
+DAGGER_NO_NAG = "1"
+GO_VERSION = "{{ exec(command='awk', args=['/^go/ { print $2 }', 'go.mod']) }}"
+
+[tasks.bootstrap]
+description = "Install required tools and Go dependencies"
+run = '''
+mise install
+go mod download
+'''
+
+[tasks.repo-bootstrap]
+description = "Bootstrap git remote repository"
+run = '''
+repo_url="git@$(awk '/^module/ { print $2 }' go.mod | sed 's|github.com/|github.com:|').git"
+description=$(yq -r '.description' .meta.yml | tr '\102' ' ' | sed -e 's/  */ /g' -e 's/^ *//' -e 's/ *$//')
+homepage=$(yq -r '.homepage // ""' .meta.yml)
+topics=$(yq -r '.topics // [] | join(",")' .meta.yml)
+
+[[ -z "${repo_url:-}" ]] && { printf 'Error: repo_url is not set\n' >&2; exit 1; }
+git rev-parse --git-dir >/dev/null 2>&1 || { printf 'Error: not a git repository\n' >&2; exit 1; }
+
+git remote add origin "$repo_url"
+
+if [ -n "$homepage" ]; then
+  gh repo edit --description "$description" --homepage "$homepage"
+else
+  gh repo edit --description "$description"
+fi
+
+if [ -n "$topics" ]; then
+  gh repo edit --add-topic "$topics"
+fi
+
+gh variable set GO_VERSION --body "$GO_VERSION"
+'''
+
+[tasks.dagger-toolchain-upgrade-all]
+description = "Upgrade all Dagger's toolchains"
+run = '''
+if [ ! -f "dagger.json" ]; then
+  echo "dagger.json file does not exist" >&2
+  exit 1
+fi
+
+jq -r '.toolchains.[].name' dagger.json | xargs -I '{}' dagger toolchain update {}
+'''
+
+[tasks.commit-lint]
+description = "Validate a commit message against the Conventional Commits specification"
+run = '''
+if [ -z "$1" ]; then
+  echo "usage: mise run commit-lint -- <commit-msg-file>" >&2
+  exit 1
+fi
+
+dagger call commitlint lint \
+  --args '--edit' \
+  --args "$1" \
+  --default-config
+'''
+
+[tasks.md-lint]
+description = "Lint Markdown files"
+run = '''
+args=""
+if [ -n "$1" ]; then
+  args="--paths-json=$1"
+fi
+
+dagger call markdown lint $args
+'''
+
+[tasks.json-lint]
+description = "Lint JSON files"
+run = '''
+args=""
+if [ -n "$1" ]; then
+  args="--paths-json=$1"
+fi
+
+dagger call jsonfile lint $args
+'''
+
+[tasks.go-lint]
+description = "Run Go linters"
+run = '''
+args=""
+if [ -n "$1" ]; then
+  args="--paths-json=$1"
+fi
+
+dagger call go --version="$GO_VERSION" lint $args
+'''
+
+[tasks.go-fmt]
+description = "Format Go source files"
+run = '''
+args=""
+if [ -n "$1" ]; then
+  args="--paths-json=$1"
+fi
+
+dagger call go --version="$GO_VERSION" fmt $args
+'''
+
+[tasks.go-modcheck]
+description = "Verify Go module files are up to date"
+run = "dagger check go:modcheck"
+
+[tasks.go-vuln]
+description = "Scan Go dependencies for known vulnerabilities"
+run = "dagger call go --version=$GO_VERSION vuln"
+
+[tasks.go-licenses]
+description = "Validate licenses of Go dependencies"
+run = "dagger call go --version=$GO_VERSION licenses"
+
+[tasks.build]
+description = "Build project artifacts using GoReleaser"
+run = "dagger call goreleaser build --snapshot --clean directory --path=./dist export --path=./dist"
+
+[tasks.lint]
+description = "Run all source and configuration linters"
+depends = [
+  "md-lint",
+  "json-lint",
+  "go-lint"
+]
+
+[tasks.fmt]
+description = "Format source files"
+depends = [
+  "go-fmt"
+]
+
+[tasks.go-check]
+description = "Run Go dependency, vulnerability, and license checks"
+depends = [
+  "go-modcheck",
+  "go-vuln",
+  "go-licenses"
+]
+
+[tasks.verify]
+description = "Run all validation checks required before a commit or pull request"
+depends = [
+  "lint",
+  "go-check"
+]
