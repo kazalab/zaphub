@@ -1,0 +1,49 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  changes:
+    uses: juli3nk/ci-shared/.github/workflows/changes.yaml@main
+    with:
+      lang_ext: "go"
+
+  checks:
+    needs: changes
+    uses: juli3nk/ci-shared/.github/workflows/git-checks.yaml@main
+    with:
+      refs_base: ${{ needs.changes.outputs.refs_base }}
+      refs_head: ${{ needs.changes.outputs.refs_head }}
+
+  lint:
+    needs: [changes, checks]
+    uses: juli3nk/ci-shared/.github/workflows/lint-generic.yaml@main
+    with:
+      files_md: ${{ needs.changes.outputs.files_md }}
+      files_yaml: ${{ needs.changes.outputs.files_yaml }}
+      files_json: ${{ needs.changes.outputs.files_json }}
+
+  lint-go:
+    needs: [changes, checks]
+    uses: juli3nk/ci-shared/.github/workflows/go-lint.yaml@main
+    with:
+      go_version: ${{ vars.GO_VERSION }}
+      files_go: ${{ needs.changes.outputs.files_lang }}
+
+  deps:
+    needs: [changes, checks]
+    if: ${{ fromJSON(needs.changes.outputs.files_lang)[0] != null }}
+    uses: juli3nk/ci-shared/.github/workflows/go-deps.yaml@main
+    with:
+      go_version: ${{ vars.GO_VERSION }}
+      check_licenses: false
+
+  build:
+    needs: [lint-go, deps]
+    uses: juli3nk/ci-shared/.github/workflows/go-build.yaml@main
